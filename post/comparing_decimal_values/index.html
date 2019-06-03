@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Oddly Specific">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="//img/IMG_0519.jpg">
+    <meta property="twitter:image" content="//img/IMG_0519.jpg" />
+    
+
+    
+    <meta name="title" content="When 0.1 &#43; 0.2 Does Not Equal 0.3" />
+    <meta property="og:title" content="When 0.1 &#43; 0.2 Does Not Equal 0.3" />
+    <meta property="twitter:title" content="When 0.1 &#43; 0.2 Does Not Equal 0.3" />
+    
+
+    
+    <meta name="description" content="A Blog About Data Science and Psychological Research">
+    <meta property="og:description" content="A Blog About Data Science and Psychological Research" />
+    <meta property="twitter:description" content="A Blog About Data Science and Psychological Research" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="R, data science, statistics">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>When 0.1 &#43; 0.2 Does Not Equal 0.3-jashu-blog</title>
+
+    <link rel="canonical" href="/post/comparing_decimal_values/">
+
+    <link rel="stylesheet" href="/css/iDisqus.min.css"/>
+	
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    
+    
+    <script src="/js/bootstrap.min.js"></script>
+    
+    
+    <script src="/js/hux-blog.min.js"></script>
+	
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/docco.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Oddly Specific</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    
+		    
+                        <li><a href="/top/about/">ABOUT</a></li>
+                    
+
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/IMG_0519.jpg')
+    }
+</style>
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                    </div>
+                    <h1>When 0.1 &#43; 0.2 Does Not Equal 0.3</h1>
+                    <h2 class="subheading">Rewriting R&#39;s %in% operator to match floating point values</h2>
+                    <span class="meta">
+			Posted by 
+			
+			    Jason Shumake
+			 
+			on 
+			Sunday, February 10, 2019
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                
+
+
+<p>One of the workshops I occasionally give in the <a href="https://liberalarts.utexas.edu/imhr/">IMHR</a> is a review of basic computer-programming principles. I’d say the programming experience for the majority of our psychology students is acquired in a pretty haphazard, piecemeal fashion—usually by learning whatever R they need to know to make it through their statistics coursework and complete their research projects.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> So they invariably end up missing some critical “bits” (pardon the pun) of knowledge. One of these is how real (non-integer) numbers are represented in binary and the consequences of that for operations like testing equality with the <code>==</code> operator.</p>
+<p>This is tremendously fun to teach because everyone is familiar with the <code>==</code> operator and not terribly excited when I ask them what does <code>(1 + 2) == 3</code> evaluate to. “TRUE”, they’ll mutter. And then I run the code:</p>
+<pre class="r"><code>(1 + 2) == 3</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>“Correct!” I’ll say. And then I’ll ask, “What about <code>(0.1 + 0.2) == (0.3)</code>?”</p>
+<p>“TRUE,” they’ll say again.</p>
+<p>And then I run the code:</p>
+<pre class="r"><code>(0.1 + 0.2) == 0.3</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Then I take a moment to enjoy the bewildered expressions, before I go on to explain that there is no precise binary representation for decimal values (unless the value corresponds to a fraction with a denominator that is a power of 2)—there are only close approximations. And so when you perform different mathematical operations on these so-called “floating point values”, you can end up with answers that are mathematically equivalent but, under the hood, are represented by a different set of 1s and 0s. And the <code>==</code> operator can only test whether the two binary representations are equivalent, not whether the real values are equivalent. And then I show them what to do if they want to test whether two values with decimals are equivalent: test whether the absolute value of the difference between the two numbers is less than a very tiny value:</p>
+<pre class="r"><code>abs((0.1 + 0.2) - 0.3) &lt; 1e-16</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>And tell them that the <code>near</code> function from the <code>dplyr</code> package implements the above test:</p>
+<pre class="r"><code>dplyr::near(0.1 + 0.2, 0.3)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>So remember, I say, never use <code>==</code> to compare two numbers with decimals; use the <code>near</code> function instead.</p>
+<p>What I had forgotten to point out, however, is that this cautionary note also applies to vectorized extensions of <code>==</code>, like <code>%in%</code>, which tests whether the LHS is equal to <em>any</em> element of the RHS. For example, is 5 in the vector {1,2,3,4,5}?</p>
+<pre class="r"><code>5 %in% c(1,2,3,4,5)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>It’s a very handy function that I use all the time.</p>
+<p>So a post-doc presented me with something pretty weird that R was doing. He had a 500 Hz time series that he had smoothed and now wanted to downsample to a 4Hz time series (4 observations per second) and a 10 Hz time series (10 observations per second). He had a time variable whose units were in seconds (and fractions of seconds), and he was using the <code>%in%</code> operator to grab the time points from the 500 Hz time series that would match the time points of the low frequency time series.</p>
+<p>So reducing the 500 Hz series to a 4 Hz series looked something like this:</p>
+<pre class="r"><code>time_500Hz &lt;- seq(0, 5, 1/500)
+time_4Hz &lt;- seq(0, 5, 1/4)
+time_500Hz[time_500Hz %in% time_4Hz]</code></pre>
+<pre><code>##  [1] 0.00 0.25 0.50 0.75 1.00 1.25 1.50 1.75 2.00 2.25 2.50 2.75 3.00 3.25
+## [15] 3.50 3.75 4.00 4.25 4.50 4.75 5.00</code></pre>
+<p>And that obviously works just fine–we’ve got 4 time points per second. But now look what happens when you try to apply the exact same code to obtain a 10 Hz time series:</p>
+<pre class="r"><code>time_500Hz &lt;- seq(0, 5, 1/500)
+time_10Hz &lt;- seq(0, 5, 1/10)
+time_500Hz[time_500Hz %in% time_10Hz]</code></pre>
+<pre><code>##  [1] 0.0 0.1 0.2 0.4 0.5 0.7 0.8 0.9 1.0 1.1 1.3 1.4 1.5 1.6 1.8 1.9 2.0
+## [18] 2.1 2.2 2.3 2.5 2.6 2.7 2.8 3.0 3.1 3.2 3.3 3.5 3.6 3.7 3.8 4.0 4.2
+## [35] 4.3 4.4 4.5 4.6 4.7 4.9 5.0</code></pre>
+<p>Notice that several time points are missing! 0.3, 1.2, 1.7, 2.4, 2.9, 3.4, 3.9, 4.1, and 4.8. Given my intro above, you can probably guess why this is happening.</p>
+<p>Here’s the 0.3 element of the 500 Hz vector:</p>
+<pre class="r"><code>time_500Hz[151]</code></pre>
+<pre><code>## [1] 0.3</code></pre>
+<p>Here’s the 0.3 element of the 10 Hz vector:</p>
+<pre class="r"><code>time_10Hz[4]</code></pre>
+<pre><code>## [1] 0.3</code></pre>
+<p>Those two things look the same, but are they?</p>
+<pre class="r"><code>time_10Hz[4] == time_500Hz[151]</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Remember, unless a decimal value corresponds to a fraction with a denominator that is a power of 2, there is no precise binary representation for that decimal value. That’s why this approach worked for the 4 Hz series (4 is a power of 2) but not for 10 Hz, for which there is no guarantee that two different binary representations of the same decimal value will be exactly equal. If we print out more digits, we see that this is exactly what is happening for 0.3:</p>
+<pre class="r"><code>print(time_10Hz[4], digits = 20)</code></pre>
+<pre><code>## [1] 0.30000000000000004441</code></pre>
+<pre class="r"><code>print(time_500Hz[151], digits = 20)</code></pre>
+<pre><code>## [1] 0.2999999999999999889</code></pre>
+<p>So as I pointed out earlier, we can use <code>dplyr::near</code> for the single-comparison case:</p>
+<pre class="r"><code>dplyr::near(time_10Hz[4], time_500Hz[151]) </code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>But how do we extend this to making multiple comparisons to achieve equivalent functionality to the <code>%in%</code> operator? Here’s a function I wrote that will override the <code>%in%</code> operator to do safe comparisons for floating point numbers. It checks to see if either the LHS or RHS is represented by a floating point value (i.e., is a “double”). If so, then it <code>purrr::map</code>s the <code>near</code> function to check whether each element of the LHS is approximately equal to any of the elements of the RHS; otherwise, it just passes the arguments to the regular <code>%in%</code> function as usual.</p>
+<pre class="r"><code>`%in%` &lt;- function(x, y){
+  if(is.double(x) | is.double(y)){
+    purrr::map_lgl(x, ~ any(dplyr::near(.x, y)))
+  } else {
+    base::`%in%`(x, y)
+  }
+}</code></pre>
+<p>Now this will achieve the desired behavior:</p>
+<pre class="r"><code>time_500Hz[time_500Hz %in% time_10Hz]</code></pre>
+<pre><code>##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6
+## [18] 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
+## [35] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2 4.3 4.4 4.5 4.6 4.7 4.8 4.9 5.0</code></pre>
+<p>So just try to be mindful and never test for exact matches with <code>==</code> or <code>%in%</code> unless you are comparing integers or characters. Use <code>dplyr</code>’s <code>near</code> instead of <code>==</code>, and use a function like the one I wrote above to replace <code>%in%</code>.</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Actually, this is the way most of us learn to program: through “exploratory learning” rather than “direct instruction”. Felienne Hermans gave a <a href="https://resources.rstudio.com/keynotes-fireside-chats/opening-keynote-day2">fantastic keynote at the last rstudio::conf</a> on this topic, and she makes a pretty convincing case against just leaving students to construct programming knowledge on their own.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+
+                
+
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/pvalues1/" data-toggle="tooltip" data-placement="top" title="Everything You Know about the P-Value is Wrong">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                
+<div id="disqus-comment"></div>
+
+
+
+            </div>
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                   
+                    
+                    <li>
+                        <a href="mailto:shumake@utexas.edu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    
+                    
+                    
+
+                    
+
+		    
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/jashu">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/in/jasonshumake/">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		    
+                    
+                                
+                    <li>
+                        <a target="_blank" href="https://stackoverflow.com/users/7170133">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-stack-overflow fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+            
+                </ul>
+		<p class="copyright text-muted">
+                    Copyright &copy; Jason Shumake 2019
+                    <br>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+</body>
+</html>
