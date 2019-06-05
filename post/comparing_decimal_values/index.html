@@ -197,15 +197,13 @@
 <p>Then I take a moment to enjoy the bewildered expressions, before I go on to explain that there is no precise binary representation for decimal values (unless the value corresponds to a fraction with a denominator that is a power of 2)—there are only close approximations. And so when you perform different mathematical operations on these so-called “floating point values”, you can end up with answers that are mathematically equivalent but, under the hood, are represented by a different set of 1s and 0s. And the <code>==</code> operator can only test whether the two binary representations are equivalent, not whether the real values are equivalent. And then I show them what to do if they want to test whether two values with decimals are equivalent: test whether the absolute value of the difference between the two numbers is less than a very tiny value:</p>
 <pre class="r"><code>abs((0.1 + 0.2) - 0.3) &lt; 1e-16</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>And tell them that the <code>near</code> function from the <code>dplyr</code> package implements the above test:</p>
+<p>I also tell them about the <code>near</code> function from the <code>dplyr</code> package that implements the same thing.</p>
 <pre class="r"><code>dplyr::near(0.1 + 0.2, 0.3)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>So remember, I say, never use <code>==</code> to compare two numbers with decimals; use the <code>near</code> function instead.</p>
 <p>What I had forgotten to point out, however, is that this cautionary note also applies to vectorized extensions of <code>==</code>, like <code>%in%</code>, which tests whether the LHS is equal to <em>any</em> element of the RHS. For example, is 5 in the vector {1,2,3,4,5}?</p>
 <pre class="r"><code>5 %in% c(1,2,3,4,5)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>It’s a very handy function that I use all the time.</p>
-<p>So a post-doc presented me with something pretty weird that R was doing. He had a 500 Hz time series that he had smoothed and now wanted to downsample to a 4Hz time series (4 observations per second) and a 10 Hz time series (10 observations per second). He had a time variable whose units were in seconds (and fractions of seconds), and he was using the <code>%in%</code> operator to grab the time points from the 500 Hz time series that would match the time points of the low frequency time series.</p>
+<p>So a post-doc recently presented me with something R was doing that he thought was pretty weird. He had a 500 Hz time series that he had smoothed and now wanted to downsample to a 4Hz time series and a 10 Hz time series. He had a time variable whose units were in seconds (and fractions of seconds), and he was using the <code>%in%</code> operator to grab the time points from the 500 Hz time series that would match the time points of the low frequency time series.</p>
 <p>So reducing the 500 Hz series to a 4 Hz series looked something like this:</p>
 <pre class="r"><code>time_500Hz &lt;- seq(0, 5, 1/500)
 time_4Hz &lt;- seq(0, 5, 1/4)
@@ -293,6 +291,7 @@ time_500Hz[time_500Hz %in% time_10Hz]</code></pre>
         </div>
     </div>
 </article>
+
 
 
 
