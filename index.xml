@@ -17,7 +17,7 @@
       <pubDate>Sun, 10 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://jashu.github.io/post/comparing_decimal_values/</guid>
-      <description>One of the workshops I occasionally give in the IMHR is a review of basic computer-programming principles. I’d say the programming experience for the majority of our psychology students is acquired in a pretty haphazard, piecemeal fashion—usually by learning whatever R they need to know to make it through their statistics coursework and complete their research projects.1 So they invariably end up missing some critical “bits” (pardon the pun) of knowledge.</description>
+      <description>I explain the dangers of using &lt;code&gt;==&lt;/code&gt; and R&amp;rsquo;s &lt;code&gt;%in%&lt;/code&gt; operator with decimal values and how &lt;code&gt;dplyr::near&lt;/code&gt; can be used instead of &lt;code&gt;==&lt;/code&gt;. I also show how to overload the &lt;code&gt;%in%&lt;/code&gt; operator to perform safe approximate matching of numeric vectors.</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>https://jashu.github.io/post/pvalues1/</guid>
-      <description>I know, yet another post tut-tutting the misuse of p-values. But there are still a lot of folks who are not woke to the problem. Last year, a good friend who is an investigational pharmacist asked for my help in putting together a session on the topic for the 2018 Hospital Pharmacy Practice Seminar, which resulted in an invitation to write a guest article for the fantastic tl;dr pharmacy blog. So, if you want to read my version of the p-value sermon, check out this link to their website:</description>
+      <description>If you want to read my version of the p-value sermon, check out this post I wrote for the tl;dr pharmacy blog.</description>
     </item>
     
     <item>
