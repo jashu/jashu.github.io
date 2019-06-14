@@ -2,30 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Oddly Specific</title>
-    <link>https://jashu.github.io/post/</link>
+    <link>/post/</link>
     <description>Recent content in Posts on Oddly Specific</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://jashu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Acetaminophen and Reflective vs. Reflexive Learning</title>
+      <link>/post/apap/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/apap/</guid>
+      <description>This post documents the key analyses reported in the article &amp;ldquo;Acetaminophen Enhances the Reflective Learning Process&amp;rdquo; by Rahel Pearson, Seth Koslov, Bethany Hamilton, Jason Shumake, Charles S. Carver, and Christopher G. Beevers. It is written from my perspective as a co-author who was not involved in designing or conducting the study but was consulted after it was finished to help with the data analysis.</description>
+    </item>
+    
+    <item>
       <title>When 0.1 &#43; 0.2 Does Not Equal 0.3</title>
-      <link>https://jashu.github.io/post/comparing_decimal_values/</link>
+      <link>/post/comparing_decimal_values/</link>
       <pubDate>Sun, 10 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://jashu.github.io/post/comparing_decimal_values/</guid>
+      <guid>/post/comparing_decimal_values/</guid>
       <description>I explain the dangers of using &lt;code&gt;==&lt;/code&gt; and R&amp;rsquo;s &lt;code&gt;%in%&lt;/code&gt; operator with decimal values and how &lt;code&gt;dplyr::near&lt;/code&gt; can be used instead of &lt;code&gt;==&lt;/code&gt;. I also show how to overload the &lt;code&gt;%in%&lt;/code&gt; operator to perform safe approximate matching of numeric vectors.</description>
     </item>
     
     <item>
       <title>Everything You Know about the P-Value is Wrong</title>
-      <link>https://jashu.github.io/post/pvalues1/</link>
+      <link>/post/pvalues1/</link>
       <pubDate>Tue, 15 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://jashu.github.io/post/pvalues1/</guid>
+      <guid>/post/pvalues1/</guid>
       <description>If you want to read my version of the p-value sermon, check out this post I wrote for the tl;dr pharmacy blog.</description>
     </item>
     

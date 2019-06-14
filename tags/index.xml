@@ -2,13 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Oddly Specific</title>
-    <link>https://jashu.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on Oddly Specific</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://jashu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reproducible research</title>
+      <link>/tags/reproducible-research/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/reproducible-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>/tags/statistics/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/statistics/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

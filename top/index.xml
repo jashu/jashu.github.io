@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tops on Oddly Specific</title>
-    <link>https://jashu.github.io/top/</link>
+    <link>/top/</link>
     <description>Recent content in Tops on Oddly Specific</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://jashu.github.io/top/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/top/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title></title>
-      <link>https://jashu.github.io/top/about/</link>
+      <link>/top/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://jashu.github.io/top/about/</guid>
+      <guid>/top/about/</guid>
       <description>About this Blog Welcome to my GitHub pages! Here you will find links to R coding tips, tutorials, and in-depth walk-throughs of the data science I am using in my current research collaborations. I hope this will be useful to others in at least two respects:
  For those interested in reproducing research that has been published, you will find the exact code that I used in my data analysis.</description>
     </item>

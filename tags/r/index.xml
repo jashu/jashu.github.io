@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Oddly Specific</title>
+    <link>/tags/r/</link>
+    <description>Recent content in R on Oddly Specific</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Acetaminophen and Reflective vs. Reflexive Learning</title>
+      <link>/post/apap/</link>
+      <pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/apap/</guid>
+      <description>This post documents the key analyses reported in the article &amp;ldquo;Acetaminophen Enhances the Reflective Learning Process&amp;rdquo; by Rahel Pearson, Seth Koslov, Bethany Hamilton, Jason Shumake, Charles S. Carver, and Christopher G. Beevers. It is written from my perspective as a co-author who was not involved in designing or conducting the study but was consulted after it was finished to help with the data analysis.</description>
+    </item>
+    
+    <item>
+      <title>When 0.1 &#43; 0.2 Does Not Equal 0.3</title>
+      <link>/post/comparing_decimal_values/</link>
+      <pubDate>Sun, 10 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/comparing_decimal_values/</guid>
+      <description>I explain the dangers of using &lt;code&gt;==&lt;/code&gt; and R&amp;rsquo;s &lt;code&gt;%in%&lt;/code&gt; operator with decimal values and how &lt;code&gt;dplyr::near&lt;/code&gt; can be used instead of &lt;code&gt;==&lt;/code&gt;. I also show how to overload the &lt;code&gt;%in%&lt;/code&gt; operator to perform safe approximate matching of numeric vectors.</description>
+    </item>
+    
+  </channel>
+</rss>
